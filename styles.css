@@ -1,8 +1,10 @@
 .wisemind-sync-view {
+  position: relative;
   container-type: inline-size;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-height: 100%;
   padding: 12px;
   color: var(--text-normal);
   font-size: 13px;
@@ -749,6 +751,127 @@
   justify-content: center;
   padding: 16px;
   background: rgba(0, 0, 0, 0.36);
+}
+
+.wisemind-sync-deprecated-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.58);
+}
+
+.wisemind-sync-deprecated-dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: min(720px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  padding: 34px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 18px;
+  background: var(--background-primary);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.36);
+  color: var(--text-normal);
+  text-align: center;
+}
+
+.wisemind-sync-deprecated-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.wisemind-sync-deprecated-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  color: var(--interactive-accent);
+}
+
+.wisemind-sync-deprecated-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wisemind-sync-deprecated-dialog h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.wisemind-sync-deprecated-lead {
+  max-width: 560px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.wisemind-sync-deprecated-steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  margin-top: 4px;
+  text-align: left;
+}
+
+.wisemind-sync-deprecated-step {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  background: var(--background-secondary);
+}
+
+.wisemind-sync-deprecated-step span {
+  overflow-wrap: anywhere;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.wisemind-sync-deprecated-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+@media (max-width: 640px) {
+  .wisemind-sync-deprecated-dialog {
+    align-items: stretch;
+    padding: 28px 18px 20px;
+  }
+
+  .wisemind-sync-deprecated-logo {
+    align-self: center;
+  }
+
+  .wisemind-sync-deprecated-dialog h1 {
+    font-size: 23px;
+  }
+
+  .wisemind-sync-deprecated-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .wisemind-sync-deprecated-actions {
+    flex-direction: column;
+  }
 }
 
 .wisemind-sync-history-title {

@@ -948,6 +948,7 @@ var runWiseMindToObsidianImport = async (options) => {
 };
 
 // src/syncView.ts
+var WISEMIND_OBSIDIAN_GUIDE_URL = "https://wisemindai.app/guide/obsidian-plugin";
 var WiseMindSyncView = class extends import_obsidian2.ItemView {
   plugin;
   obsidianItems = [];
@@ -978,6 +979,7 @@ var WiseMindSyncView = class extends import_obsidian2.ItemView {
   planBarEl;
   toolbarEl;
   flowEl;
+  migrationNoticeEl;
   constructor(leaf, plugin) {
     super(leaf);
     this.plugin = plugin;
@@ -995,7 +997,6 @@ var WiseMindSyncView = class extends import_obsidian2.ItemView {
   async onOpen() {
     this.renderShell();
     await this.refresh();
-    this.openTutorialOnFirstUse();
   }
   async onClose() {
     this.selectedObsidian.clear();
@@ -1099,6 +1100,55 @@ var WiseMindSyncView = class extends import_obsidian2.ItemView {
     this.planBarEl = root.createDiv({ cls: "wisemind-sync-plan-bar" });
     this.toolbarEl = root.createDiv({ cls: "wisemind-sync-toolbar" });
     this.flowEl = root.createDiv({ cls: "wisemind-sync-flow" });
+    this.renderMigrationNotice(root);
+  }
+  renderMigrationNotice(root) {
+    this.migrationNoticeEl?.remove();
+    const overlay = root.createDiv({ cls: "wisemind-sync-deprecated-overlay" });
+    const dialog = overlay.createDiv({ cls: "wisemind-sync-deprecated-dialog" });
+    const closeButton = dialog.createEl("button", {
+      cls: "wisemind-sync-icon-button wisemind-sync-deprecated-close",
+      text: "\xD7",
+      attr: { type: "button", "aria-label": "\u5173\u95ED\u63D0\u793A" }
+    });
+    closeButton.onclick = (event) => {
+      event.preventDefault();
+      overlay.remove();
+    };
+    const logoWrap = dialog.createDiv({ cls: "wisemind-sync-deprecated-logo" });
+    logoWrap.innerHTML = wisemindai_logo_default;
+    dialog.createEl("h1", { text: "WiseMindAI Sync \u5DF2\u505C\u6B62\u7EF4\u62A4" });
+    dialog.createEl("p", {
+      cls: "wisemind-sync-deprecated-lead",
+      text: "\u8BF7\u6539\u7528\u65B0\u7684 WiseMindAI Obsidian \u63D2\u4EF6\uFF0C\u540E\u7EED\u529F\u80FD\u548C\u66F4\u65B0\u90FD\u4F1A\u5728\u65B0\u63D2\u4EF6\u4E2D\u63D0\u4F9B\u3002"
+    });
+    const steps = dialog.createDiv({ cls: "wisemind-sync-deprecated-steps" });
+    const searchStep = steps.createDiv({ cls: "wisemind-sync-deprecated-step" });
+    searchStep.createEl("strong", { text: "\u5728 Obsidian \u4E2D\u5B89\u88C5" });
+    searchStep.createEl("span", { text: "\u6253\u5F00\u793E\u533A\u63D2\u4EF6\u5E02\u573A\uFF0C\u641C\u7D22 \u201CWiseMindAI\u201D\uFF0C\u5B89\u88C5\u5E76\u542F\u7528\u65B0\u7684\u63D2\u4EF6\u3002" });
+    const guideStep = steps.createDiv({ cls: "wisemind-sync-deprecated-step" });
+    guideStep.createEl("strong", { text: "\u67E5\u770B\u5B89\u88C5\u8BF4\u660E" });
+    guideStep.createEl("span", { text: WISEMIND_OBSIDIAN_GUIDE_URL });
+    const actions = dialog.createDiv({ cls: "wisemind-sync-deprecated-actions" });
+    const guideButton = actions.createEl("button", {
+      cls: "wisemind-sync-button is-primary",
+      text: "\u6253\u5F00\u5B89\u88C5\u6559\u7A0B",
+      attr: { type: "button" }
+    });
+    guideButton.onclick = (event) => {
+      event.preventDefault();
+      window.open(WISEMIND_OBSIDIAN_GUIDE_URL, "_blank", "noopener,noreferrer");
+    };
+    const closeAction = actions.createEl("button", {
+      cls: "wisemind-sync-text-button",
+      text: "\u6211\u77E5\u9053\u4E86",
+      attr: { type: "button" }
+    });
+    closeAction.onclick = (event) => {
+      event.preventDefault();
+      overlay.remove();
+    };
+    this.migrationNoticeEl = overlay;
   }
   renderDynamic() {
     this.renderStats();
